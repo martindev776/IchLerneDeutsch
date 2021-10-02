@@ -1,7 +1,7 @@
-﻿module Verbs
+﻿module VerbService
 
 open System
-open WordInfo
+open VerbInfo
 open Utilities
 
 type Pronouns =
@@ -48,7 +48,7 @@ let DisplayVerbs verbType =
     
     match verbType with
           | VerbType.Regular -> "regularVerbsEndingInEn"
-    |> ReadCsvs.Read
+    |> ReadCsvs.Read2ColumnCsv
     |> Array.indexed
     |> Array.map (match verbType with
                  | VerbType.Regular -> MapRegularVerbs)

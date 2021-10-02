@@ -1,17 +1,17 @@
-﻿module Nouns
+﻿module NounService
 
 open System
-open WordInfo
+open NounInfo
 open Utilities
 
-let GetArticle gender =
+let GetDefiniteArticle gender =
     match gender with
     | Masculine -> "der"
     | Feminine -> "die"
     | Neuter -> "das"
 
 let GetPrintNounText word =
-    let article = word.Gender |> GetArticle
+    let article = word.Gender |> GetDefiniteArticle
     article + " " + word.German + " / " + "the " + word.English
 
 let PrintNoun word =
@@ -27,7 +27,7 @@ let GetNouns gender =
         | Gender.Masculine -> masculineFileName
         | Gender.Feminine -> feminineFileName
         | Gender.Neuter -> neuterFileName
-    |> ReadCsvs.Read
+    |> ReadCsvs.Read2ColumnCsv
     |> Array.map (fun (german, english) -> { English = english; German = german; Gender = gender })
 
 let GetAllNouns() =
@@ -61,7 +61,7 @@ let rec PlayTheDefiniteArticleGame() =
         |> PrintMenu
 
         let CheckIfArticleIsCorrect noun chosenArticle =
-            let nounsArticle = noun.Gender |> GetArticle
+            let nounsArticle = noun.Gender |> GetDefiniteArticle
 
             let mappedChosenArticle = match chosenArticle with
                                       | "1" -> "der"

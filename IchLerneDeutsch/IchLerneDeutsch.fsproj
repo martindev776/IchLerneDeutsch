@@ -21,9 +21,10 @@
     </None>
     <Compile Include="Utilities.fs" />
     <Compile Include="ReadCsvs.fs" />
-    <Compile Include="WordInfo.fs" />
-    <Compile Include="Verbs.fs" />
-    <Compile Include="Nouns.fs" />
+    <Compile Include="Verbs\VerbInfo.fs" />
+    <Compile Include="Verbs\VerbService.fs" />
+    <Compile Include="Nouns\NounInfo.fs" />
+    <Compile Include="Nouns\NounService.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

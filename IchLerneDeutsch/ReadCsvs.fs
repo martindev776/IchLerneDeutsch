@@ -6,4 +6,8 @@ let Read csvName =
     File.ReadLines(@"DataFiles\" + csvName + ".csv") 
     |> Seq.toArray
     |> Array.map (fun x -> x.Split(","))
-    |> Array.map (fun x -> (x.[0], x.[1]))
+
+let Read2ColumnCsv csvName =
+    csvName
+    |> Read
+    |> Array.map (fun x -> (x.[0].Trim(), x.[1].Trim()))

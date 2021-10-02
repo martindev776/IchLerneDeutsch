@@ -1,6 +1,6 @@
 ﻿open System
-open Nouns
-open Verbs
+open NounService
+open VerbService
 open Utilities
 
 [<EntryPoint>]
