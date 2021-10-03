@@ -5,14 +5,13 @@ open VerbInfo
 open Utilities
 open SubjectInfo
 
-let ConjugateVerb word subject =   
+let ConjugateRegularVerb word subject =   
 
     let lastLetter = word.Root.[word.Root.Length - 1]
     let extraE = match lastLetter with
                  | 'd' | 't' -> "e"
                  | _ -> ""
 
-    //Regular verbs only right now
     let ending = match subject with
                  | Ich -> "e"
                  | Du -> extraE + "st"
@@ -22,7 +21,8 @@ let ConjugateVerb word subject =
     word.Root + ending 
 
 let GetConjugationDisplay verb pronoun =
-    let conjugate = verb |> ConjugateVerb
+    let conjugate = verb |> match verb.Type with
+                            | VerbType.Regular -> ConjugateRegularVerb
     $"{(pronoun |> MapSubject)} -> {(pronoun |> conjugate)}"
 
 let MapRegularVerbs (german, english) =
