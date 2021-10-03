@@ -4,6 +4,7 @@ open System
 open VerbInfo
 open Utilities
 open SubjectInfo
+open System.Collections.Generic
 
 let ConjugateRegularVerb verb subject =   
 
@@ -15,33 +16,18 @@ let ConjugateRegularVerb verb subject =
     let ending = match subject with
                  | Ich -> "e"
                  | Du -> extraE + "st"
-                 | Er | SieInformal | Es | Ihr -> extraE + "t"
+                 | Er | Sie | Es | Ihr -> extraE + "t"
                  | Wir | SieFormal | SiePlural -> "en"
 
     verb.Root + ending
 
-let ConjugateIrregularVerb verb subject =
-
-    let ConjugateHaben() =
-        match subject with
-        | Ich -> "habe"
-        | Du -> "hast"
-        | Er | SieInformal | Es -> "hat"
-        | Ihr -> "habt"
-        | Wir | SieFormal | SiePlural -> "haben"
-
-    let ConjugateSein() =
-        match subject with
-        | Ich -> "bin"
-        | Du -> "bist"
-        | Er | SieInformal | Es -> "ist"
-        | Ihr -> "seid"
-        | Wir | SieFormal | SiePlural -> "sind"
-
-    match verb.German with
-    | "haben" -> ConjugateHaben()
-    | "sein" -> ConjugateSein()
-    | _ -> "No conjugation implemented"   
+let ConjugateIrregularVerb verb subject =    
+    let ConjugateIrregularVerb (irregularVerbDict: IDictionary<int, string>) pronoun =
+        let index = pronoun |> MapPronounToInt
+        irregularVerbDict.[index]
+        
+    subject     
+    |> (verb.German |> ReadCsvs.ReadIrregularVerbCsv |> ConjugateIrregularVerb)
     
 
 let GetConjugationDisplay verb pronoun =

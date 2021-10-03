@@ -13,6 +13,12 @@
     <None Include="DataFiles\irregularVerbs.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="DataFiles\IrregularVerbs\haben.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="DataFiles\IrregularVerbs\sein.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="DataFiles\masculineNouns.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
