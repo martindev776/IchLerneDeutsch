@@ -10,6 +10,9 @@
     <None Include="DataFiles\feminineNouns.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="DataFiles\irregularVerbs.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="DataFiles\masculineNouns.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -21,12 +24,12 @@
     </None>
     <Compile Include="Utilities.fs" />
     <Compile Include="ReadCsvs.fs" />
-    <Compile Include="Sentences\SentenceService.fs" />
     <Compile Include="Nouns\SubjectInfo.fs" />
     <Compile Include="Nouns\NounInfo.fs" />
     <Compile Include="Nouns\NounService.fs" />
     <Compile Include="Verbs\VerbInfo.fs" />
     <Compile Include="Verbs\VerbService.fs" />
+    <Compile Include="Sentences\SentenceService.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

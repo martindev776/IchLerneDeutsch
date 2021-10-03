@@ -16,8 +16,7 @@ let PrintMenu items =
     |> PrintItems
     
 
-let PressAnyKeyToContinuePrintMenu items =
-    Console.Clear()
+let PressAnyKeyToContinuePrintMenu items =    
     items 
     |> PrintItems
     Console.WriteLine("Press any key to continue...")

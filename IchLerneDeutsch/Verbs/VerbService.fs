@@ -5,9 +5,9 @@ open VerbInfo
 open Utilities
 open SubjectInfo
 
-let ConjugateRegularVerb word subject =   
+let ConjugateRegularVerb verb subject =   
 
-    let lastLetter = word.Root.[word.Root.Length - 1]
+    let lastLetter = verb.Root.[verb.Root.Length - 1]
     let extraE = match lastLetter with
                  | 'd' | 't' -> "e"
                  | _ -> ""
@@ -18,25 +18,44 @@ let ConjugateRegularVerb word subject =
                  | Er | SieInformal | Es | Ihr -> extraE + "t"
                  | Wir | SieFormal | SiePlural -> "en"
 
-    word.Root + ending 
+    verb.Root + ending
+
+let ConjugateIrregularVerb verb subject =
+
+    let ConjugateHaben() =
+        match subject with
+        | Ich -> "habe"
+        | Du -> "hast"
+        | Er | SieInformal | Es -> "hat"
+        | Ihr -> "habt"
+        | Wir | SieFormal | SiePlural -> "haben"
+
+    let ConjugateSein() =
+        match subject with
+        | Ich -> "bin"
+        | Du -> "bist"
+        | Er | SieInformal | Es -> "ist"
+        | Ihr -> "seid"
+        | Wir | SieFormal | SiePlural -> "sind"
+
+    match verb.German with
+    | "haben" -> ConjugateHaben()
+    | "sein" -> ConjugateSein()
+    | _ -> "No conjugation implemented"   
+    
 
 let GetConjugationDisplay verb pronoun =
     let conjugate = verb |> match verb.Type with
                             | VerbType.Regular -> ConjugateRegularVerb
+                            | VerbType.Irregular -> ConjugateIrregularVerb
     $"{(pronoun |> MapSubject)} -> {(pronoun |> conjugate)}"
-
-let MapRegularVerbs (german, english) =
-    { English = english
-      German = german
-      Root = german.Substring(0, german.Length - 2)
-      Ending = "en"
-      Type = VerbType.Regular }
 
 let rec DisplayVerbMenu verbType =
     
     let menuTuples =
         match verbType with
             | VerbType.Regular -> "regularVerbsEndingInEn"
+            | VerbType.Irregular -> "irregularVerbs"
         |> ReadCsvs.Read2ColumnCsv
         |> Array.indexed
         |> Array.map (fun (index, (german, english)) -> (index + 1, german, english))
@@ -59,7 +78,7 @@ let rec DisplayVerbMenu verbType =
 
     match inputValue with
     | inputValue when Array.contains inputValue menuSelections -> menuDict.[inputValue |> int]                                                                   
-                                                                  |> MapRegularVerbs
+                                                                  |> MapRegularVerbs verbType
                                                                   |> (fun verb -> AllPronouns |> Array.map (GetConjugationDisplay verb))
                                                                   |> PressAnyKeyToContinuePrintMenu; DisplayVerbMenu verbType
     | "Q" | "q" -> () |> ignore
@@ -68,7 +87,8 @@ let rec DisplayVerbMenu verbType =
 let rec VerbMainMenu() =
     [|
         $"What do you want to do?";
-        $"1: Display Regular Verbs";        
+        $"1: Display Regular Verbs";
+        $"2: Display Irregular Verbs";
         $"Q: Quit"
     |]
     |> PrintMenu
@@ -77,5 +97,6 @@ let rec VerbMainMenu() =
 
     match inputValue with
     | "1" -> VerbType.Regular |> DisplayVerbMenu |> ignore
+    | "2" -> VerbType.Irregular |> DisplayVerbMenu |> ignore
     | "Q" | "q" -> () |> ignore
     | _ -> VerbMainMenu()
