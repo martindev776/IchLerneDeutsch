@@ -10,4 +10,4 @@ let Read csvName =
 let Read2ColumnCsv csvName =
     csvName
     |> Read
-    |> Array.map (fun x -> (x.[0].Trim(), x.[1].Trim()))
+    |> Array.map (fun x -> (x.[0].Trim().ToString(), x.[1].Trim().ToString()))
